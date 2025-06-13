@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCM AI-Powered Case Record Generator</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; margin: 20px; background-color: #f4f4f9; }
+        .container { max-width: 700px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1, h2 { color: #333; text-align: center; }
+        label { display: block; margin-top: 15px; font-weight: bold; }
+        input[type="text"], input[type="date"], textarea { width: 95%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; margin-top: 5px; font-family: sans-serif; font-size: 16px; }
+        button { background-color: #007bff; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; margin-top: 20px; display: block; margin-left: auto; margin-right: auto; }
+        button:hover { background-color: #0056b3; }
+        #result { margin-top: 20px; background: #e9ecef; padding: 15px; border-radius: 4px; white-space: pre-wrap; }
+        .nav-link { text-align: center; display: block; margin-bottom: 20px; font-size: 18px; text-decoration: none; color: #007bff; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>LANXIANG TCM - 兰湘中医疼痛治疗中心</h1>
+        <a href="/history" class="nav-link">Xem Lịch Sử Bệnh Án</a>
+        
+        <form id="tcm-form">
+            <label for="customer-name">1. Patient Name</label>
+            <input type="text" id="customer-name" required>
+
+            <label for="time-reason-date">2. Onset Date (Ngày khởi phát)</label>
+            <input type="date" id="time-reason-date" required>
+
+            <label for="time-reason-text">Cause of Injury/Condition (Nguyên nhân)</label>
+            <textarea id="time-reason-text" rows="2" placeholder="e.g., stress from work..." required></textarea>
+
+            <label for="symptoms">3. Presenting Symptoms</label>
+            <textarea id="symptoms" rows="4" required></textarea>
+
+            <label for="treatment-method">4. Treatment Administered</label>
+            <textarea id="treatment-method" rows="4" required></textarea>
+
+            <label for="session-n">5. Current Treatment Session Number</label>
+            <input type="text" id="session-n" required>
+
+            <label for="session-total">6. Planned Total Sessions</label>
+            <input type="text" id="session-total" required>
+
+            <button type="submit">Generate AI Report</button>
+        </form>
+
+        <h2>AI-Generated Report:</h2>
+        <div id="result">...The result will appear here...</div>
+    </div>
+
+    <script>
+        document.getElementById('tcm-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const button = event.target.querySelector('button');
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerText = 'Sending request to AI, please wait...';
+            button.innerText = 'Processing...';
+            button.disabled = true;
+
+            const onsetDate = document.getElementById('time-reason-date').value;
+            const reasonText = document.getElementById('time-reason-text').value;
+            const fullTimeAndReason = `${onsetDate}: ${reasonText}`;
+
+            const data = {
+                "Patient Name": document.getElementById('customer-name').value,
+                "Time and Reason": fullTimeAndReason,
+                "Symptoms": document.getElementById('symptoms').value,
+                "Treatment Method": document.getElementById('treatment-method').value,
+                "Current Treatment Session Number": document.getElementById('session-n').value,
+                "Planned Total Sessions": document.getElementById('session-total').value
+            };
+
+            try {
+                const response = await fetch('/generate_tcm_report', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const responseData = await response.json();
+                if (responseData.ai_generated_report) {
+                    resultDiv.innerText = responseData.ai_generated_report;
+                } else {
+                    resultDiv.innerText = 'An error occurred: ' + JSON.stringify(responseData.error);
+                }
+            } catch (error) {
+                resultDiv.innerText = 'Critical error, could not connect to API: ' + error;
+            } finally {
+                button.innerText = 'Generate AI Report';
+                button.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

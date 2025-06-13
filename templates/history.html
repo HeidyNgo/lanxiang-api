@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Lịch Sử Bệnh Án</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Lịch Sử Bệnh Án</h1>
+        <a href="{{ url_for('index') }}">← Trở về trang chính</a>
+
+        {% for date, records in grouped_records.items() %}
+            <h2>📅 Ngày {{ date | datetimeformat('%d/%m/%Y') }}</h2>
+            {% for record in records %}
+            <div class="record">
+                <p><strong>Hồ sơ #{{ record.id }} - {{ record.patient_name }}</strong></p>
+                <p><strong>Thời gian tạo:</strong> {{ record.created_at.strftime('%d/%m/%Y') }}</p>
+                <p><strong>Triệu chứng đã khai:</strong> {{ record.symptoms }}</p>
+                <p><strong>Phương pháp điều trị:</strong> {{ record.treatment }}</p>
+                <p><strong>Báo cáo do AI tạo:</strong></p>
+                <pre>{{ record.ai_report }}</pre>
+                <a href="{{ url_for('download_record', record_id=record.id) }}" class="btn btn-success">Tải về (.pdf)</a>
+                <form action="{{ url_for('delete_record', record_id=record.id) }}" method="POST" style="display:inline;">
+                    <input type="password" name="password" placeholder="Mật khẩu xóa">
+                    <button type="submit" class="btn btn-danger">Xóa</button>
+                </form>
+            </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+</body>
+</html>
