@@ -1,8 +1,0 @@
-Flask
-gunicorn
-openai
-requests
-psycopg2-binary
-reportlab
-fpdf
-xhtml2pdf
