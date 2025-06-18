@@ -2,13 +2,17 @@ import express from 'express';
 import cors from 'cors';
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { JWT } from 'google-auth-library';
-import fetch from 'node-fetch';
-import path from 'path'; // <--- DÒNG MỚI ĐÃ THÊM
+
+// KHÔNG CẦN IMPORT THƯ VIỆN BÊN NGOÀI NỮA
 
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(express.static('public')); // <--- DÒNG MỚI ĐÃ THÊM
+app.use(express.static('public')); 
+
+app.get('/', (req, res) => {
+  res.redirect('/index1.html');
+});
 
 const PORT = process.env.PORT || 3000;
 
@@ -41,70 +45,87 @@ function normalizeDate(dateString) {
     return trimmedDate;
 }
 
-// === API 1: LẤY TRẠNG THÁI NHÂN VIÊN (LOGIC VIẾT LẠI HOÀN TOÀN) ===
+// =================================================================
+// SỬA LỖI LỊCH TRÙNG BẰNG JAVASCRIPT NGUYÊN BẢN
+// =================================================================
 app.get('/api/staff-availability', async (req, res) => {
     try {
-        const { date, startTime, duration } = req.query;
-        if (!date || !startTime || !duration) {
-            return res.status(400).json({ error: 'Date, startTime, and duration are required.' });
+        const { date, startTime, serviceName } = req.query;
+        if (!date || !startTime || !serviceName) {
+            return res.status(400).json({ error: 'Date, startTime, and serviceName are required.' });
         }
-
-        const newBookingStart = new Date(`${date}T${startTime}`);
-        const newBookingEnd = new Date(newBookingStart.getTime() + parseInt(duration) * 60000);
-
+        
+        // Chỉ định rõ múi giờ GMT+7 của Việt Nam
+        const TIMEZONE_OFFSET = '+07:00'; 
         const doc = await accessSpreadsheet();
+        
+        const servicesSheet = doc.sheetsByTitle['Services'];
+        const servicesRows = await servicesSheet.getRows();
+        const serviceInfo = servicesRows.find(row => row.get('service_name') === serviceName);
+        if (!serviceInfo) throw new Error(`Service "${serviceName}" not found.`);
+        const duration = parseInt(serviceInfo.get('duration_minutes'));
+        if (isNaN(duration)) throw new Error(`Invalid duration for service "${serviceName}".`);
+        
+        // Tạo đối tượng Date với múi giờ chính xác
+        const newBookingStart = new Date(`${date}T${startTime}:00.000${TIMEZONE_OFFSET}`);
+        const newBookingEnd = new Date(newBookingStart.getTime() + duration * 60000);
+
+        const staffSheet = doc.sheetsByTitle['Staff'];
+        const allStaffNames = (await staffSheet.getRows()).map(row => row.get('staff_name')).filter(Boolean);
+        
         const offDaysSheet = doc.sheetsByTitle['OffDays'];
-        if (!offDaysSheet) throw new Error("Sheet 'OffDays' not found!");
-        const offDaysRows = await offDaysSheet.getRows();
-        const allStaffNames = [...new Set(offDaysRows.map(row => row.get('name')))].filter(Boolean);
-        const offStaffNames = offDaysRows.filter(row => normalizeDate(row.get('off_date')) === date).map(row => row.get('name'));
-        const workingStaffNames = allStaffNames.filter(name => !offStaffNames.includes(name));
+        const offStaffOnDate = (await offDaysSheet.getRows())
+            .filter(row => normalizeDate(row.get('off_date')) === date)
+            .map(row => row.get('name'));
 
         const webBookingsSheet = doc.sheetsByTitle['WebBookings'];
         const walkinsSheet = doc.sheetsByTitle['Walkins'];
-        if (!webBookingsSheet || !walkinsSheet) throw new Error("Sheets 'WebBookings' or 'Walkins' not found!");
         const webBookingsRows = await webBookingsSheet.getRows();
         const walkinsRows = await walkinsSheet.getRows();
-        const allBookingsOnDate = [...webBookingsRows, ...walkinsRows].filter(row => normalizeDate(row.get('booking_date')) === date);
+        
+        const bookingDateParts = date.split('-');
+        const bookingDateForSheet = `${bookingDateParts[2]}/${bookingDateParts[1]}/${bookingDateParts[0]}`;
 
-        const availabilityResult = workingStaffNames.map(staffName => {
-            const staffBookings = allBookingsOnDate.filter(b => b.get('name') === staffName);
+        const allBookingsOnDate = [...webBookingsRows, ...walkinsRows]
+            .filter(row => row.get('booking_date') === bookingDateForSheet);
+
+        const availabilityResult = allStaffNames.map(staffName => {
+            if (offStaffOnDate.includes(staffName)) {
+                return { name: staffName, is_available: false, next_available_time: null };
+            }
+
             let isAvailable = true;
             let nextAvailableTime = null;
 
-            for (const booking of staffBookings) {
-                const existingStart = new Date(`${date}T${booking.get('start_time')}`);
-                const existingEnd = new Date(`${date}T${booking.get('end_time')}`);
-                
-                // Kiểm tra xung đột
+            const relevantBookings = allBookingsOnDate.filter(b => b.get('staff') === staffName || b.get('staff') === 'Any');
+
+            for (const booking of relevantBookings) {
+                // Tạo đối tượng Date cho các booking đã có với múi giờ chính xác
+                const existingStart = new Date(`${date}T${booking.get('start_time')}:00.000${TIMEZONE_OFFSET}`);
+                const existingEnd = new Date(`${date}T${booking.get('end_time')}:00.000${TIMEZONE_OFFSET}`);
+
+                // So sánh chính xác
                 if (newBookingStart < existingEnd && newBookingEnd > existingStart) {
                     isAvailable = false;
-                    const nextTime = new Date(existingEnd.getTime() + 1 * 60000); // Thêm 1 phút nghỉ
-                    nextAvailableTime = `${('0' + nextTime.getHours()).slice(-2)}:${('0' + nextTime.getMinutes()).slice(-2)}`;
+                    nextAvailableTime = booking.get('end_time');
                     break; 
                 }
             }
-
-            return {
-                name: staffName,
-                is_available: isAvailable,
-                next_available_time: nextAvailableTime,
-            };
+            return { name: staffName, is_available: isAvailable, next_available_time: nextAvailableTime };
         });
 
         res.json({ staff_availability: availabilityResult });
+
     } catch (error) {
         console.error('Error in /api/staff-availability:', error);
         res.status(500).json({ error: 'An internal server error occurred.', details: error.message });
     }
 });
 
-
-// API 2: Ghi nhận booking mới (Giữ nguyên logic chống trùng lịch)
+// Các hàm khác giữ nguyên
 app.post('/api/bookings', async (req, res) => {
-    // ... (logic này đã đúng, giữ nguyên)
+    res.status(501).send('Not Implemented');
 });
-
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
