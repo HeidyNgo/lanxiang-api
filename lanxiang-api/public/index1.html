@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LANXIANG TCM - 兰湘中医疼痛治疗中心</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Honeycomb Gallery Styles */
+        .honeycomb-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0;
+            transform: translateY(34px);
+        }
+
+        .honeycomb-cell {
+            flex: 0 0 200px;
+            height: 220px;
+            margin: 0 1px 2px;
+            position: relative;
+            overflow: hidden;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            transition: transform 0.3s ease;
+        }
+
+        .honeycomb-cell img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .honeycomb-cell:hover {
+            transform: scale(1.05);
+            z-index: 2;
+        }
+
+        .honeycomb-hidden {
+            visibility: hidden;
+        }
+
+        /* ----- CSS MỚI CHO 2 VIDEO ----- */
+        .videos-row {
+            display: flex; /* Kích hoạt Flexbox */
+            flex-wrap: wrap; /* Cho phép xuống dòng trên màn hình nhỏ */
+            justify-content: center; /* Căn giữa 2 video */
+            gap: 20px; /* Khoảng cách giữa 2 video */
+            margin: 40px 0; /* Khoảng cách trên dưới cho khu vực video */
+        }
+
+        .video-item {
+            flex: 1 1 400px; /* Video sẽ co giãn nhưng không nhỏ hơn 400px */
+            max-width: 560px; /* Giới hạn chiều rộng tối đa */
+        }
+
+        .video-responsive-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            padding-top: 56.25%; /* Tỷ lệ 16:9 cho video YouTube */
+        }
+
+        .video-responsive-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        /* ----- HẾT CSS MỚI ----- */
+
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .honeycomb-gallery {
+                transform: translateY(0);
+            }
+            
+            .honeycomb-cell {
+                flex: 0 0 150px;
+                height: 165px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .honeycomb-cell {
+                flex: 0 0 120px;
+                height: 132px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-contact-bar">
+        <div class="container">
+            <div class="contact-item">
+                <h3>Hotline Booking / <span lang="zh-CN">预约热线</span></h3>
+                <p><a href="tel:+6597221681">+65 9722 1681</a></p>
+            </div>
+            <div class="contact-item">
+                <h3>Address / <span lang="zh-CN">地址</span></h3>
+                <p>1 Park Road, People's Park Complex, Singapore 059108<br>#03-73K, #03-28, #03-69, #03-29</p>
+            </div>
+            <div class="contact-item">
+                <h3>Opening Hours / <span lang="zh-CN">营业时间</span></h3>
+                <p><span lang="en">Monday - Sunday:</span> 9:00 AM - 10:30 PM<br><span lang="zh-CN">周一至周日:</span> 上午 9:00 - 晚上 10:30</p>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <img src="image/logo.jpg" alt="LANXIANG TCM Logo" class="logo">
+            <h1>LANXIANG TCM<br><span lang="zh-CN">兰湘中医疼痛治疗中心</span></h1>
+            
+            <img src="image/massage.jpg" alt="Relaxing massage therapy at Lanxiang TCM" class="header-banner">
+        </div>
+    </header>
+
+<nav>
+    <div class="container">
+        <a href="/">Home / <span lang="zh-CN">首页</span></a>
+        <a href="/service.html">Services / <span lang="zh-CN">服务项目</span></a>
+        <a href="/booking.html">Booking / <span lang="zh-CN">预约</span></a>
+    </div>
+</nav>
+
+
+    <main class="container">
+        <h2>Welcome to LANXIANG TCM / <span lang="zh-CN">欢迎光临兰湘中医</span></h2>
+        <p>
+            <span lang="en">Your trusted centre for traditional Chinese medicine pain treatment. We are dedicated to providing authentic and effective therapies to restore your body's balance and well-being.</span>
+            <br>
+            <span lang="zh-CN">您值得信赖的中医疼痛治疗中心。我们致力于提供正宗有效的中医疗法，帮助您恢复身体的平衡与健康。</span>
+        </p>
+
+        <h3>About Us / <span lang="zh-CN">关于我们</span></h3>
+        <p>
+            <span lang="en">With a team of experienced and certified practitioners, we specialize in a range of TCM therapies designed to address the root cause of your pain and discomfort. Our serene environment ensures a relaxing and healing experience for every client.</span>
+            <br>
+            <span lang="zh-CN">我们拥有一支经验丰富、资质齐全的理疗师团队，专注于各类中医传统疗法，旨在从根源上解决您的疼痛与不适。我们宁静舒适的环境确保为每一位顾客带来放松和治愈的体验。</span>
+        </p>
+        
+        <div class="videos-row">
+
+            <div class="video-item">
+                <div class="video-responsive-container">
+                    <iframe src="YOUR_VIDEO_1_URL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div class="video-item">
+                <div class="video-responsive-container">
+                    <iframe src="YOUR_VIDEO_2_URL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+            </div>
+
+        </div>
+        <div class="honeycomb-gallery">
+            <div class="honeycomb-cell">
+                <img src="image/massage1.png" alt="TCM Therapy">
+            </div>
+            <div class="honeycomb-cell">
+                <img src="image/massage2.png" alt="TCM Therapy">
+            </div>
+            <div class="honeycomb-cell">
+                <img src="image/massage3.png" alt="TCM Therapy">
+            </div>
+            <div class="honeycomb-cell honeycomb-hidden"></div> <div class="honeycomb-cell">
+                <img src="image/massage4.png" alt="TCM Therapy">
+            </div>
+            <div class="honeycomb-cell">
+                <img src="image/massage5.png" alt="TCM Therapy">
+            </div>
+            <div class="honeycomb-cell">
+                <img src="image/massage6.png" alt="TCM Therapy">
+            </div>
+            
+            <div class="honeycomb-cell">
+                <img src="image/massage7.png" alt="TCM Therapy">
+            </div>
+            <div class="honeycomb-cell">
+                <img src="image/massage8.png" alt="TCM Therapy">
+            </div>
+            <div class="honeycomb-cell">
+                <img src="image/massage9.png" alt="TCM Therapy">
+            </div>
+            <div class="honeycomb-cell honeycomb-hidden"></div> </div>
+    </main>
+
+    <footer>
+        <div class="container">
+             <iframe 
+                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.815951676571!2d103.8412198758882!3d1.2842079612398453!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da190b2b2a7589%3A0x885348834458316c!2sPeople's%20Park%20Complex!5e0!3m2!1sen!2ssg!4v1718898145452!5m2!1sen!2ssg" 
+                 class="google-map" 
+                 style="border:0;" 
+                 allowfullscreen="" 
+                 loading="lazy" 
+                 referrerpolicy="no-referrer-when-downgrade">
+             </iframe>
+            <p class="copyright">© 2025 LANXIANG TCM. All Rights Reserved.</p>
+        <div style="text-align: right; padding: 10px; font-size: 12px; color: #555;">
+   <div>
+ Visits / 访问量: <strong id="visitor-count">...</strong>
+</div>
+</div>
+    </footer>
+
+    <script>
+        // Hàm này sẽ được Apps Script từ phía server gọi sau khi xử lý xong
+        // và trả về dữ liệu số đếm.
+        function handleVisitCount(data) {
+            // Tìm đến phần tử có id là 'visitor-count'
+            const countElement = document.getElementById('visitor-count');
+            // Nếu tìm thấy, cập nhật nội dung của nó bằng con số mới
+            if (countElement) {
+                countElement.innerText = data.count;
+            }
+        }
+
+        // Sự kiện này đảm bảo trang web đã tải xong toàn bộ HTML
+        // trước khi chúng ta chạy mã lệnh.
+        document.addEventListener('DOMContentLoaded', function() {
+            // !!! QUAN TRỌNG: BẠN CẦN THAY THẾ BẰNG URL WEB APP CỦA BẠN !!!
+            const a_URL = "https://script.google.com/macros/s/AKfycbwFlnh8JP2bllJN5PmXP6yj4irFDcNURPwU4rvB-Xz-tIoNITyvWLm36LGExjul7K2Z/exec"; 
+
+            // Đoạn mã này tạo ra một thẻ <script> mới một cách linh động
+            // và thêm nó vào trang. Trình duyệt sẽ tự động gọi đến URL trong thẻ này.
+            // Kỹ thuật này gọi là JSONP, giúp vượt qua một số hạn chế bảo mật của trình duyệt.
+            const script = document.createElement('script');
+            script.src = a_URL + "?action=tally_visit&callback=handleVisitCount";
+            document.body.appendChild(script);
+        });
+    </script>
+    </body>
+</html>
