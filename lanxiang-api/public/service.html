@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services - LANXIANG TCM</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        nav .container a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .contact-item {
+            text-align: center;
+        }
+        .contact-item h3 {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* === CSS CHO HIỆU ỨNG NHẤP NHÁY === */
+        main h2 {
+            display: flex;
+            align-items: center;
+        }
+        .hot-label {
+            background-color: #ff0000;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 0.7em;
+            font-weight: bold;
+            margin-left: 12px;
+            animation: blink-animation 1.2s infinite;
+        }
+        @keyframes blink-animation {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* === CSS CHO GÓI "BEST PRICE" === */
+        .best-deal-text {
+            color: #d90429;
+            font-weight: bold;
+        }
+        .best-price-label {
+            background-color: #ff0000;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-left: 10px;
+            animation: blink-animation 1.2s infinite;
+        }
+        .best-deal-price {
+            color: #d90429;
+            font-weight: bold;
+        }
+
+        /* === CSS ĐỂ CĂN CHỈNH ICON TRONG BẢNG DỊCH VỤ === */
+        .service-table tbody td {
+            vertical-align: middle;
+        }
+        .service-name img {
+            height: 24px;
+            width: auto;
+            vertical-align: middle;
+            margin-left: 8px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="top-contact-bar">
+        <div class="container">
+            <div class="contact-item">
+                <h3>
+                    <i class="fa-solid fa-phone-volume"></i>
+                    Hotline Booking / <span lang="zh-CN">预约热线</span>
+                </h3>
+                <p><a href="tel:+6597221681">+65 9722 1681</a></p>
+            </div>
+            <div class="contact-item">
+                <h3>
+                    <i class="fa-solid fa-map-location-dot"></i>
+                    Address / <span lang="zh-CN">地址</span>
+                </h3>
+                <p>1 Park Road, People's Park Complex, Singapore 059108<br>#03-73K, #03-28, #03-69, #03-29</p>
+            </div>
+            <div class="contact-item">
+                <h3>
+                    <i class="fa-solid fa-clock"></i>
+                    Opening Hours / <span lang="zh-CN">营业时间</span>
+                </h3>
+                <p><span lang="en">Monday - Sunday:</span> 9:00 AM - 10:30 PM<br><span lang="zh-CN">周一至周日:</span> 上午 9:00 - 晚上 10:30</p>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <img src="image/logo.jpg" alt="LANXIANG TCM Logo" class="logo">
+            <h1>LANXIANG TCM<br><span lang="zh-CN">兰湘中医疼痛治疗中心</span></h1>
+            
+            <img src="image/massage.jpg" alt="Relaxing massage therapy at Lanxiang TCM" class="header-banner">
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container">
+            <a href="index1.html">
+                <lord-icon
+                    src="/icons/home.json"
+                    trigger="hover"
+                    style="width:25px;height:25px">
+                </lord-icon>
+                Home / <span lang="zh-CN">首页</span>
+            </a>
+            <a href="service.html">
+                <lord-icon
+                    src="/icons/document.json"
+                    trigger="hover"
+                    style="width:25px;height:25px">
+                </lord-icon>
+                Services / <span lang="zh-CN">服务项目</span>
+            </a>
+            <a href="booking.html">
+                <lord-icon
+                    src="/icons/calendar.json"
+                    trigger="hover"
+                    style="width:25px;height:25px">
+                </lord-icon>
+                Booking / <span lang="zh-CN">预约</span>
+            </a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <h2>Our Services / <span lang="zh-CN">服务项目</span></h2>
+        
+        <table class="service-table">
+            <thead>
+                <tr>
+                    <th>Service / <span lang="zh-CN">项目</span></th>
+                    <th>Duration / <span lang="zh-CN">时长</span></th>
+                    <th>Price / <span lang="zh-CN">价格</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td rowspan="3" class="service-name">
+                        <span>Foot Massage / <span lang="zh-CN">足底按摩</span></span>
+                        <img width="48" height="48" src="https://img.icons8.com/color/48/feet-body-part.png" alt="feet-body-part"/>
+                    </td>
+                    <td>30 mins</td>
+                    <td class="price">$15</td>
+                </tr>
+                <tr>
+                    <td>40 mins</td>
+                    <td class="price">$20</td>
+                </tr>
+                <tr>
+                    <td>60 mins</td>
+                    <td class="price">$25</td>
+                </tr>
+                 <tr>
+                    <td rowspan="2" class="service-name">
+                        <span>Foot + Shoulder Massage / <span lang="zh-CN">足底 + 肩部按摩</span></span>
+                        <img width="48" height="48" src="https://img.icons8.com/color/48/feet-body-part.png" alt="feet-body-part"/>
+                        <img width="64" height="64" src="https://img.icons8.com/external-flaticons-flat-flat-icons/64/external-shoulder-anatomy-flaticons-flat-flat-icons.png" alt="external-shoulder-anatomy-flaticons-flat-flat-icons"/>
+                    </td>
+                    <td>40 mins</td>
+                    <td class="price">$20</td>
+                </tr>
+                <tr>
+                    <td>60 mins</td>
+                    <td class="price">$25</td>
+                </tr>
+                <tr>
+                    <td class="service-name">
+                        <span>Professional Pedicure / <span lang="zh-CN">专业修脚</span></span>
+                        <img width="50" height="50" src="https://img.icons8.com/scribby/50/feet-body-part.png" alt="feet-body-part"/>
+                    </td>
+                    <td>30 mins</td>
+                    <td class="price">$30</td>
+                </tr>
+                <tr>
+                    <td class="service-name">
+                        <span>Ear Candling / <span lang="zh-CN">耳烛</span></span>
+                        <img width="64" height="64" src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/64/external-cleaning-hygiene-flaticons-lineal-color-flat-icons-2.png" alt="external-cleaning-hygiene-flaticons-lineal-color-flat-icons-2"/>
+                    </td>
+                    <td>30 mins</td>
+                    <td class="price">$30</td>
+                </tr>
+                <tr>
+                    <td class="service-name">
+                        <span>Cupping - Scraping / <span lang="zh-CN">拔罐 - 刮擦</span></span>
+                        <img width="64" height="64" src="https://img.icons8.com/external-ddara-flat-ddara/64/external-cupping-beauty-and-spa-ddara-flat-ddara.png" alt="external-cupping-beauty-and-spa-ddara-flat-ddara"/>
+                    </td>
+                    <td>30 mins</td>
+                    <td class="price">$30</td>
+                </tr>
+                <tr>
+                    <td rowspan="4" class="service-name">
+                        <span>Body Massage / <span lang="zh-CN">身体按摩</span></span>
+                        <img width="48" height="48" src="https://img.icons8.com/color/48/body.png" alt="body"/>
+                    </td>
+                    <td>30 mins</td>
+                    <td class="price">$30</td>
+                </tr>
+                <tr>
+                    <td>60 mins</td>
+                    <td class="price">$45</td>
+                </tr>
+                <tr>
+                    <td>90 mins</td>
+                    <td class="price">$70</td>
+                </tr>
+                <tr>
+                    <td>120 mins</td>
+                    <td class="price">$90</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Combo Packages / <span lang="zh-CN">优惠套餐</span><span class="hot-label">HOT</span></h2>
+        <table class="service-table">
+              <thead>
+                <tr>
+                    <th>Combo / <span lang="zh-CN">套餐</span></th>
+                    <th>Price / <span lang="zh-CN">价格</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="best-deal-text">
+                        30 mins Foot + 30 mins Body / <span lang="zh-CN">30分钟足底 + 30分钟身体</span>
+                        <span class="best-price-label">Best Price</span>
+                    </td>
+                    <td class="price best-deal-price">$35</td>
+                </tr>
+                 <tr>
+                    <td>45 mins Foot + 30 mins Body / <span lang="zh-CN">45分钟足底 + 30分钟身体</span></td>
+                    <td class="price">$45</td>
+                </tr>
+                 <tr>
+                    <td>45 mins Foot + 45 mins Body / <span lang="zh-CN">45分钟足底 + 45分钟身体</span></td>
+                    <td class="price">$50</td>
+                </tr>
+                <tr>
+                    <td>60 mins foot + 30 mins body / <span lang="zh-CN">60分钟足底 + 30分钟身体</span></td>
+                    <td class="price">$50</td>
+                </tr>
+                <tr>
+                    <td>30 mins foot + 60 mins body / <span lang="zh-CN">30分钟足底 + 60分钟身体</span></td>
+                    <td class="price">$55</td>
+                </tr>
+                <tr>
+                    <td>45 mins foot + 60 mins body / <span lang="zh-CN">45分钟足底 + 60分钟身体</span></td>
+                    <td class="price">$60</td>
+                </tr>
+                <tr>
+                    <td>60 mins foot + 60 mins body / <span lang="zh-CN">60分钟足底 + 60分钟身体</span></td>
+                    <td class="price">$65</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <footer>
+        <div class="container">
+               <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.8105740436853!2d103.8416413759082!3d1.2874937611842858!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da190ad3a9920b%3A0xf30ca32deb24fdf1!2sPeople's%20Park%20Complex!5e0!3m2!1sen!2s!4v1718362615878!5m2!1sen!2s" 
+                    class="google-map" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+              </iframe>
+            <p class="copyright">© 2025 LANXIANG TCM. All Rights Reserved.</p>
+        </div>
+    </footer>
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+</body>
+</html>
